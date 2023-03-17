@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Task{% endblock %}
+{% block menu %}
+    <a href="{% url 'task_add' %}">Add Task</a>
+    <a href="{% url 'task_update' task.pk %}">Update Task</a>
+{% endblock %}
+{% block content %}
+    <body>
+    <div class="container">
+<div class="card">
+                <h5 class="card-header">{{ task.title }}</h5>
+                <div class="card-body">
+                    <p class="card-title">Description:{{ task.description }}</p>
+                    <p class="card-title">Type:{{ task.type }}</p>
+                    <p class="card-title">Status: {{ task.status }}</p>
+                    <p class="card-title">Created date:{{ task.created_at }}</p>
+                    <p class="card-title">End :{{ task.ended_at }}</p>
+
+
+                </div>
+            </div>
+
+    </div>
+</body>
+{% endblock %}
