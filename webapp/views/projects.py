@@ -1,12 +1,8 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.models import User
-from django.core.handlers.wsgi import WSGIRequest
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, TemplateView
-
-from webapp.forms import ProjectForm, TaskForm, AddUserForm
-from webapp.models import Task
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from webapp.forms import ProjectForm,  AddUserForm
 from webapp.models.project import Project
 
 
