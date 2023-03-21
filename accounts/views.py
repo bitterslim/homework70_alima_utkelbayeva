@@ -1,6 +1,6 @@
 from django.contrib import messages
-from django.views.generic import TemplateView
-from accounts.forms import LoginForm
+from django.views.generic import TemplateView, CreateView
+from accounts.forms import LoginForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 
@@ -26,13 +26,24 @@ class LoginView(TemplateView):
             messages.warning(request, "Username is not found")
             return redirect('index')
         login(request, user)
-        messages.success(request, 'Welcome')
-        next = request.GET.get('next')
-        if next:
-            return redirect(next)
-        return redirect('index')
+        if user:
+            return redirect('index')
 
 
 def logout_view(request):
     logout(request)
     return redirect('index')
+
+class RegisterView(CreateView):
+    template_name = 'register.html'
+    form_class = UserCreationForm
+    success_url = '/'
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect(self.success_url)
+        context = {'form': form}
+        return self.render_to_response(context)
