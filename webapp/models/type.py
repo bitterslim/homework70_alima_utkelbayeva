@@ -10,4 +10,4 @@ class Type(models.Model):
     type = models.CharField(max_length=100, choices=TypeChoise.choices, default=TypeChoise.TASK, null=False, blank=False, verbose_name='Type')
 
     def __str__(self) -> str:
-        return f'{self.type}'
+        return self.type
