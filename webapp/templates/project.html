@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Task{% endblock %}
+{% block menu %}
+
+{% endblock %}
+    <body>
+    {% block content %}
+    <div class="container">
+<div class="card">
+                <h5 class="card-header">{{ project.title }}</h5>
+                <div class="card-body">
+                    <p class="card-title">Description:{{ project.description }}</p>
+                    <p class="card-title">Created date:{{ project.start_date }}</p>
+                    <p class="card-title">Finish at :{{ project.finish_date }}</p>
+                </div>
+            {% if user.is_authenticated %}
+    <a href="{% url 'project_add' %}">Add Project</a>
+    <a href="{% url 'project_update' project.pk %}">Update Project</a>
+    <a href="{% url 'project_add_user' project.pk %}">Add User</a>
+
+        {% endif %}
+            </div>
+{% endblock %}
+</body>

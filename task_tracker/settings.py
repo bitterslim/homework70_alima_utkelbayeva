@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'task_tracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'task_tracker',
+        'NAME': 'task_data',
         'USER': 'postgres',
         'PASSWORD': '12345',
         'HOST': 'localhost',

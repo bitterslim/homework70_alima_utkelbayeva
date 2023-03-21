@@ -10,4 +10,4 @@ class Status(models.Model):
     status = models.CharField(max_length=100, choices=StatusChoise.choices, default=StatusChoise.NEW, null=False, blank=False, verbose_name='Status')
 
     def __str__(self) -> str:
-        return f'{self.status}'
+        return self.status
