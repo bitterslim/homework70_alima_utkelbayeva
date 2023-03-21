@@ -1,7 +1,9 @@
-from django.core.validators import MinLengthValidator, BaseValidator
+from django.contrib.auth.models import User
+from django.core.validators import BaseValidator
 from django import forms
-from django.forms import widgets
-from webapp.models import Task
+from webapp.models import Task, Status
+from webapp.models.project import Project
+
 
 class CustomLenValidator(BaseValidator):
     def __init__(self, limit_value = 20):
@@ -18,6 +20,11 @@ class CustomLenValidator(BaseValidator):
         return len(value)
 
 class TaskForm(forms.ModelForm):
+    created_at = forms.CharField(required=True, label='Created at', widget= forms.SelectDateWidget)
+    ended_at = forms.CharField(required=True, label='End at', widget=forms.SelectDateWidget)
+    status = forms.ModelChoiceField(required=True,label='Status',queryset=Status.objects.all(), widget=forms.Select)
+    project = forms.ModelChoiceField( required=False,label='Project',queryset=Project.objects.all(),widget=forms.Select)
+
     class Meta:
         model = Task
         fields = ('title', 'status','type', 'created_at','ended_at', 'description')
@@ -26,12 +33,27 @@ class TaskForm(forms.ModelForm):
             'description': 'Task description',
             'status': 'Task status',
             'type': 'Task type',
+            'created_at': 'Created at'
         }
-        widgets = {
-            'created_at': widgets.DateInput,
-            'ended_at': widgets.DateInput
-            }
 
 
-class SearchForm(forms.Form):
-    search = forms.CharField(max_length=50, required=False, label='Search')
+class ProjectForm(forms.ModelForm):
+    start_date= forms.CharField(required=True, label='Started at', widget=forms.SelectDateWidget)
+    finish_date= forms.CharField(required=True, label='Finish to', widget=forms.SelectDateWidget)
+    class Meta:
+        model = Project
+        fields = ('title', 'description', 'start_date', 'finish_date')
+        labels = {
+            'title': 'Project title',
+            'description': 'Project description',
+            'start_date': 'Started at',
+            'finish_date': 'Finish to'
+        }
+class AddUserForm(forms.ModelForm):
+    user = forms.ModelChoiceField(queryset=User.objects.all())
+    class Meta:
+        model = Project
+        fields = ('user', )
+        labels = {
+            'user': 'User'
+        }
